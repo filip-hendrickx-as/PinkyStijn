@@ -99,6 +99,7 @@ This directory contains the structured use case documentation for the KRUZE Coff
 | [UC-032](UC-032-loyalty-earn-points.md) | Earn Loyalty Points | Customer / Loyalty | Could | Draft (MVP) |
 | [UC-033](UC-033-loyalty-badges.md) | View and Unlock Loyalty Badges | Customer / Gamification | Could | Draft |
 | [UC-034](UC-034-loyalty-redeem-rewards.md) | Redeem Loyalty Rewards | Customer / Loyalty | Could | Draft (MVP) |
+| [UC-043](UC-043-configure-loyalty-programme.md) | Configure Loyalty Programme | Customer / Loyalty / Operations | Could | Draft (MVP) |
 | [UC-035](UC-035-loyalty-challenges-tips.md) | Participate in Challenges and View Content | Customer / Gamification | Could | Draft |
 
 ---
