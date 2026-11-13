@@ -16,7 +16,7 @@ A registered customer exchanges accumulated loyalty points for a reward from the
 - **Related capability (not part of this UC):** The admin configures the rewards catalogue and earn rate. See Preconditions and Open Question OQ-12 in UC-032.
 
 ## Preconditions
-- The customer is a registered customer who is a loyalty member (UC-032, see OQ-3 there) and is logged in (webshop) or has been selected by the cashier (POS).
+- The customer is a registered customer who has opted in to the loyalty programme (UC-032 BR-7, AF-3) and is logged in (webshop) or has been selected by the cashier (POS).
 - The customer has sufficient points for at least one reward.
 - The rewards catalogue has been configured by the admin, with at least one active reward (name, description, points cost, availability).
 
@@ -44,6 +44,7 @@ A registered customer exchanges accumulated loyalty points for a reward from the
 - **EF-3: Already Used** — At step 10, the reward has already been used. The system rejects the attempt.
 - **EF-4: Reward No Longer Available** — At step 4, the reward was deactivated or is out of stock (for limited-availability rewards) after the customer viewed the list. The system informs the customer and no points are deducted.
 - **EF-5: Reward Not Applicable to the Order** — At step 10, the reward cannot be applied to the order (e.g., it requires a product not in the cart, or a minimum order amount is not met). The system explains why and the order total is unchanged.
+- **EF-7: Reward Exceeds the Purchase Amount** — At step 10 (or AF-1), the value of the reward is higher than the purchase amount it is applied to. The system does not let the order total go below zero (BR-7). What happens to the excess value, and whether the reward is blocked, is undecided; see OQ-14. Which amounts make up the purchase amount is undecided; see OQ-7.
 - **EF-6: Payment Not Completed** — At step 11, the payment fails or is cancelled. The reward is not marked as used and remains available (see OQ-8 for whether the points are returned).
 
 ## Postconditions
@@ -59,9 +60,11 @@ A registered customer exchanges accumulated loyalty points for a reward from the
 - **BR-4:** An issued reward has a validity period and cannot be used after it has passed (period undecided, see OQ-3).
 - **BR-5:** Redemption integrates with POS (UC-021) and webshop checkout (UC-025).
 - **BR-6:** Reward types available in the MVP are undecided (see OQ-2). The previously drafted types were: percentage discount, fixed discount, free product, free upgrade.
+- **BR-7:** A reward applied to a purchase can be worth at most the purchase amount, so the order or sale total never goes below zero. Whether the purchase amount includes shipping and VAT is undecided (see OQ-7 and UC-032 OQ-2); the handling of any excess value is undecided (see OQ-14).
+- **BR-8:** Only customers who have opted in to the loyalty programme can redeem rewards (UC-032 BR-7).
 
 ## Open Questions
-Decisions needed from the product owner. Nothing below has been decided; the flows above avoid assuming an answer. Earning-related questions are in UC-032 (OQ-1 to OQ-14).
+Decisions needed from the product owner. Nothing below has been decided; the flows above avoid assuming an answer. Earning- and enrolment-related questions are in UC-032 (OQ-1 to OQ-19; opt-in enrolment is decided there as BR-7).
 
 | ID | Question | Options |
 |----|----------|---------|
@@ -78,6 +81,7 @@ Decisions needed from the product owner. Nothing below has been decided; the flo
 | OQ-11 | How is stock handled for a free-product reward? | Normal sale line at zero price (stock deducted), or separate handling; and how is it shown on receipts, invoices (UC-008), and VAT breakdown |
 | OQ-12 | Can a customer see the cost of rewards they cannot yet afford? | Show all rewards with shortfall, or only affordable rewards |
 | OQ-13 | Can a customer cancel an issued reward to get points back? | No; yes within a period; yes any time before use |
+| OQ-14 | What happens to the excess value when a reward is worth more than the purchase amount (BR-7)? | (a) Excess is lost; (b) excess is kept as a remainder on the reward for a later purchase; (c) excess is converted back into points; (d) the reward cannot be applied to a purchase smaller than its value (blocked) |
 
 ## Implementation Notes
 - Applying a reward changes the order total, so it must be reflected in the VAT breakdown (per VAT class), in the payment amount sent to the payment provider (UC-025), and in the POS receipt (UC-021).
